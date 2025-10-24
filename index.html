@@ -194,6 +194,7 @@
             overflow: hidden;
             box-shadow: 0 5px 15px rgba(0,0,0,0.05);
             transition: transform 0.3s, box-shadow 0.3s;
+            cursor: pointer;
         }
         
         .product-card:hover {
@@ -246,7 +247,7 @@
             color: var(--gray);
         }
         
-        .add-to-cart {
+        .view-details {
             width: 100%;
             padding: 12px;
             background: var(--primary);
@@ -259,8 +260,215 @@
             transition: background 0.3s;
         }
         
-        .add-to-cart:hover {
+        .view-details:hover {
             background: #a00926;
+        }
+        
+        /* Category Filter */
+        .category-filter {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        
+        .category-btn {
+            padding: 8px 20px;
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 500;
+        }
+        
+        .category-btn:hover,
+        .category-btn.active {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+        
+        /* Product Detail Section */
+        .product-detail {
+            padding: 60px 0;
+            display: none;
+        }
+        
+        .product-detail-container {
+            background: white;
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+        
+        .product-detail-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+        }
+        
+        .product-detail-images {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        
+        .main-image {
+            height: 400px;
+            overflow: hidden;
+            border-radius: 10px;
+        }
+        
+        .main-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .thumbnail-images {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .thumbnail {
+            width: 80px;
+            height: 80px;
+            border-radius: 5px;
+            overflow: hidden;
+            cursor: pointer;
+            border: 2px solid transparent;
+            transition: border-color 0.3s;
+        }
+        
+        .thumbnail.active {
+            border-color: var(--primary);
+        }
+        
+        .thumbnail img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .product-detail-info h1 {
+            font-size: 2rem;
+            margin-bottom: 15px;
+            color: var(--secondary);
+        }
+        
+        .product-detail-price {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 20px;
+        }
+        
+        .product-detail-description {
+            margin-bottom: 30px;
+            line-height: 1.8;
+        }
+        
+        .product-specs {
+            margin-bottom: 30px;
+        }
+        
+        .product-specs h3 {
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+            color: var(--secondary);
+        }
+        
+        .specs-list {
+            list-style: none;
+        }
+        
+        .specs-list li {
+            margin-bottom: 10px;
+            display: flex;
+        }
+        
+        .specs-list li strong {
+            width: 150px;
+        }
+        
+        .size-selector {
+            margin-bottom: 30px;
+        }
+        
+        .size-selector h3 {
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+            color: var(--secondary);
+        }
+        
+        .size-options {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        
+        .size-option {
+            width: 50px;
+            height: 50px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .size-option:hover,
+        .size-option.selected {
+            border-color: var(--primary);
+            background: rgba(200, 16, 46, 0.1);
+        }
+        
+        .size-option.unavailable {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        
+        .product-detail-actions {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .add-to-cart-detail {
+            flex: 2;
+            padding: 15px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        
+        .add-to-cart-detail:hover {
+            background: #a00926;
+        }
+        
+        .back-btn {
+            flex: 1;
+            padding: 15px;
+            background: white;
+            color: var(--secondary);
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .back-btn:hover {
+            background: var(--light);
         }
         
         /* Cart Section */
@@ -616,6 +824,10 @@
         
         /* Responsive */
         @media (max-width: 992px) {
+            .product-detail-content {
+                grid-template-columns: 1fr;
+            }
+            
             .checkout-form {
                 grid-template-columns: 1fr;
             }
@@ -675,6 +887,10 @@
             
             .cart-item-quantity {
                 margin: 10px 0;
+            }
+            
+            .product-detail-actions {
+                flex-direction: column;
             }
         }
         
@@ -751,8 +967,25 @@
     <section class="products" id="home">
         <div class="container">
             <h2 class="section-title">Featured Shoes</h2>
+            <div class="category-filter" id="category-filter">
+                <button class="category-btn active" data-category="all">All Shoes</button>
+                <button class="category-btn" data-category="men">Men's Shoes</button>
+                <button class="category-btn" data-category="women">Women's Shoes</button>
+                <button class="category-btn" data-category="official">Official Shoes</button>
+            </div>
             <div class="product-grid" id="product-grid">
                 <!-- Products will be dynamically inserted here -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Product Detail Section -->
+    <section class="product-detail" id="product-detail">
+        <div class="container">
+            <div class="product-detail-container">
+                <div class="product-detail-content" id="product-detail-content">
+                    <!-- Product details will be dynamically inserted here -->
+                </div>
             </div>
         </div>
     </section>
@@ -910,77 +1143,357 @@
     </div>
 
     <script>
-        // Sample product data
+        // Sample product data with categories, descriptions, specifications, and sizes
         const products = [
+            // Men's Shoes
             {
                 id: 1,
                 name: "Urban Explorer",
                 price: 4500,
                 priceUSD: 35,
-                image: "https://images.unsplash.com/photo-1549298916-b41d501d3772?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80"
+                category: "men",
+                image: "https://images.unsplash.com/photo-1549298916-b41d501d3772?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+                images: [
+                    "https://images.unsplash.com/photo-1549298916-b41d501d3772?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+                    "https://images.unsplash.com/photo-1549298916-b41d501d3772?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+                    "https://images.unsplash.com/photo-1549298916-b41d501d3772?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80"
+                ],
+                description: "The Urban Explorer is designed for the modern man who values both style and comfort. These shoes feature a sleek design with premium materials that provide all-day comfort. Perfect for city walks, casual outings, and everyday wear.",
+                specifications: {
+                    "Material": "Genuine Leather",
+                    "Sole Type": "Rubber",
+                    "Closure": "Lace-up",
+                    "Heel Type": "Flat",
+                    "Toe Style": "Round",
+                    "Color": "Black/Brown"
+                },
+                sizes: ["7", "8", "9", "10", "11", "12"]
             },
             {
                 id: 2,
                 name: "City Walker",
                 price: 3800,
                 priceUSD: 30,
-                image: "https://images.unsplash.com/photo-1560769629-975ec94e6a86?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80"
+                category: "men",
+                image: "https://images.unsplash.com/photo-1560769629-975ec94e6a86?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+                images: [
+                    "https://images.unsplash.com/photo-1560769629-975ec94e6a86?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+                    "https://images.unsplash.com/photo-1560769629-975ec94e6a86?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+                    "https://images.unsplash.com/photo-1560769629-975ec94e6a86?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80"
+                ],
+                description: "City Walker shoes are engineered for urban exploration. With their lightweight construction and breathable materials, they keep your feet comfortable during long walks through the city. The versatile design complements both casual and smart-casual outfits.",
+                specifications: {
+                    "Material": "Synthetic Leather",
+                    "Sole Type": "TPR",
+                    "Closure": "Slip-on",
+                    "Heel Type": "Flat",
+                    "Toe Style": "Round",
+                    "Color": "Gray/White"
+                },
+                sizes: ["7", "8", "9", "10", "11"]
             },
             {
                 id: 3,
                 name: "Heritage Runner",
                 price: 5200,
                 priceUSD: 40,
-                image: "https://images.unsplash.com/photo-1562183241-b937e955a905?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80"
+                category: "men",
+                image: "https://images.unsplash.com/photo-1562183241-b937e955a905?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+                images: [
+                    "https://images.unsplash.com/photo-1562183241-b937e955a905?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+                    "https://images.unsplash.com/photo-1562183241-b937e955a905?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+                    "https://images.unsplash.com/photo-1562183241-b937e955a905?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80"
+                ],
+                description: "Inspired by classic running shoes, the Heritage Runner combines retro aesthetics with modern comfort technology. These shoes feature a cushioned midsole and supportive upper, making them perfect for both athletic activities and casual wear.",
+                specifications: {
+                    "Material": "Mesh & Synthetic",
+                    "Sole Type": "EVA Foam",
+                    "Closure": "Lace-up",
+                    "Heel Type": "Low",
+                    "Toe Style": "Round",
+                    "Color": "Blue/White"
+                },
+                sizes: ["8", "9", "10", "11", "12"]
             },
             {
                 id: 4,
                 name: "Culture Classic",
                 price: 4200,
                 priceUSD: 33,
-                image: "https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80"
+                category: "men",
+                image: "https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+                images: [
+                    "https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+                    "https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+                    "https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80"
+                ],
+                description: "The Culture Classic celebrates traditional craftsmanship with a contemporary twist. These shoes feature hand-stitched details and premium materials that reflect our cultural heritage while providing modern comfort and durability.",
+                specifications: {
+                    "Material": "Full Grain Leather",
+                    "Sole Type": "Leather",
+                    "Closure": "Lace-up",
+                    "Heel Type": "Low",
+                    "Toe Style": "Round",
+                    "Color": "Brown/Tan"
+                },
+                sizes: ["7", "8", "9", "10", "11"]
             },
             {
                 id: 5,
                 name: "Street Style",
                 price: 4900,
                 priceUSD: 38,
-                image: "https://images.unsplash.com/photo-1606107557195-0e29a4b5b4aa?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80"
+                category: "men",
+                image: "https://images.unsplash.com/photo-1606107557195-0e29a4b5b4aa?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+                images: [
+                    "https://images.unsplash.com/photo-1606107557195-0e29a4b5b4aa?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+                    "https://images.unsplash.com/photo-1606107557195-0e29a4b5b4aa?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+                    "https://images.unsplash.com/photo-1606107557195-0e29a4b5b4aa?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80"
+                ],
+                description: "Make a statement with Street Style shoes. Designed for the fashion-forward individual, these shoes feature bold design elements and premium materials that stand out in any urban setting. Perfect for those who want to express their unique style.",
+                specifications: {
+                    "Material": "Suede & Leather",
+                    "Sole Type": "Rubber",
+                    "Closure": "Lace-up",
+                    "Heel Type": "Low",
+                    "Toe Style": "Round",
+                    "Color": "Black/Red"
+                },
+                sizes: ["8", "9", "10", "11", "12"]
             },
+            
+            // Women's Shoes
             {
                 id: 6,
                 name: "Urban Nomad",
                 price: 5500,
                 priceUSD: 42,
-                image: "https://images.unsplash.com/photo-1607522370275-f142068729ff?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80"
+                category: "women",
+                image: "https://images.unsplash.com/photo-1607522370275-f142068729ff?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+                images: [
+                    "https://images.unsplash.com/photo-1607522370275-f142068729ff?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+                    "https://images.unsplash.com/photo-1607522370275-f142068729ff?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+                    "https://images.unsplash.com/photo-1607522370275-f142068729ff?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80"
+                ],
+                description: "Urban Nomad shoes are designed for the modern woman on the go. These versatile shoes combine comfort and style, making them perfect for everything from city exploration to casual outings. The sleek design complements any outfit.",
+                specifications: {
+                    "Material": "Synthetic Leather",
+                    "Sole Type": "Rubber",
+                    "Closure": "Slip-on",
+                    "Heel Type": "Low",
+                    "Toe Style": "Pointed",
+                    "Color": "Black/White"
+                },
+                sizes: ["5", "6", "7", "8", "9", "10"]
             },
             {
                 id: 7,
                 name: "Heritage High",
                 price: 4800,
                 priceUSD: 37,
-                image: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80"
+                category: "women",
+                image: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+                images: [
+                    "https://images.unsplash.com/photo-1542291026-7eec264c27ff?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+                    "https://images.unsplash.com/photo-1542291026-7eec264c27ff?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+                    "https://images.unsplash.com/photo-1542291026-7eec264c27ff?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80"
+                ],
+                description: "Heritage High heels celebrate traditional craftsmanship with a modern twist. These elegant shoes feature premium materials and hand-finished details that reflect our cultural heritage. Perfect for special occasions or adding sophistication to any outfit.",
+                specifications: {
+                    "Material": "Patent Leather",
+                    "Sole Type": "Leather",
+                    "Closure": "Buckle",
+                    "Heel Type": "High (3.5 inches)",
+                    "Toe Style": "Pointed",
+                    "Color": "Black"
+                },
+                sizes: ["5", "6", "7", "8", "9"]
             },
             {
                 id: 8,
                 name: "City Cruiser",
                 price: 4100,
                 priceUSD: 32,
-                image: "https://images.unsplash.com/photo-1525966222134-fcfa99b8ae77?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80"
+                category: "women",
+                image: "https://images.unsplash.com/photo-1525966222134-fcfa99b8ae77?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+                images: [
+                    "https://images.unsplash.com/photo-1525966222134-fcfa99b8ae77?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+                    "https://images.unsplash.com/photo-1525966222134-fcfa99b8ae77?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+                    "https://images.unsplash.com/photo-1525966222134-fcfa99b8ae77?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80"
+                ],
+                description: "City Cruiser flats are designed for all-day comfort without sacrificing style. These lightweight shoes feature a flexible sole and breathable materials, making them perfect for busy days. The versatile design pairs well with both casual and professional outfits.",
+                specifications: {
+                    "Material": "Canvas",
+                    "Sole Type": "Rubber",
+                    "Closure": "Slip-on",
+                    "Heel Type": "Flat",
+                    "Toe Style": "Round",
+                    "Color": "Navy/White"
+                },
+                sizes: ["5", "6", "7", "8", "9", "10"]
             },
             {
                 id: 9,
                 name: "Culture Court",
                 price: 5300,
                 priceUSD: 41,
-                image: "https://images.unsplash.com/photo-1512374382143-06378e054fda?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80"
+                category: "women",
+                image: "https://images.unsplash.com/photo-1512374382143-06378e054fda?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+                images: [
+                    "https://images.unsplash.com/photo-1512374382143-06378e054fda?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+                    "https://images.unsplash.com/photo-1512374382143-06378e054fda?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+                    "https://images.unsplash.com/photo-1512374382143-06378e054fda?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80"
+                ],
+                description: "Culture Court sneakers blend traditional design elements with modern comfort. These shoes feature unique patterns and premium materials that tell a story of cultural heritage. Perfect for those who appreciate artistry in their footwear.",
+                specifications: {
+                    "Material": "Canvas & Leather",
+                    "Sole Type": "Rubber",
+                    "Closure": "Lace-up",
+                    "Heel Type": "Low",
+                    "Toe Style": "Round",
+                    "Color": "Multi-color"
+                },
+                sizes: ["6", "7", "8", "9", "10"]
             },
             {
                 id: 10,
                 name: "Urban Trail",
                 price: 4700,
                 priceUSD: 36,
-                image: "https://images.unsplash.com/photo-1606107557195-0e29a4b5b4aa?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80"
+                category: "women",
+                image: "https://images.unsplash.com/photo-1606107557195-0e29a4b5b4aa?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+                images: [
+                    "https://images.unsplash.com/photo-1606107557195-0e29a4b5b4aa?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+                    "https://images.unsplash.com/photo-1606107557195-0e29a4b5b4aa?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+                    "https://images.unsplash.com/photo-1606107557195-0e29a4b5b4aa?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80"
+                ],
+                description: "Urban Trail shoes are designed for the adventurous woman. These rugged yet stylish shoes feature a durable sole and weather-resistant materials, making them perfect for both urban exploration and light outdoor activities. The versatile design adapts to any environment.",
+                specifications: {
+                    "Material": "Synthetic & Mesh",
+                    "Sole Type": "Rubber",
+                    "Closure": "Lace-up",
+                    "Heel Type": "Low",
+                    "Toe Style": "Round",
+                    "Color": "Olive/Black"
+                },
+                sizes: ["6", "7", "8", "9", "10"]
+            },
+            
+            // Official Shoes
+            {
+                id: 11,
+                name: "Executive Oxford",
+                price: 6800,
+                priceUSD: 52,
+                category: "official",
+                image: "https://images.unsplash.com/photo-1549298916-b41d501d3772?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+                images: [
+                    "https://images.unsplash.com/photo-1549298916-b41d501d3772?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+                    "https://images.unsplash.com/photo-1549298916-b41d501d3772?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+                    "https://images.unsplash.com/photo-1549298916-b41d501d3772?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80"
+                ],
+                description: "The Executive Oxford is the epitome of professional footwear. Crafted from premium leather with meticulous attention to detail, these shoes exude sophistication and confidence. Perfect for board meetings, formal events, and any professional setting.",
+                specifications: {
+                    "Material": "Full Grain Leather",
+                    "Sole Type": "Leather",
+                    "Closure": "Lace-up",
+                    "Heel Type": "Low",
+                    "Toe Style": "Cap Toe",
+                    "Color": "Black"
+                },
+                sizes: ["7", "8", "9", "10", "11", "12"]
+            },
+            {
+                id: 12,
+                name: "Business Derby",
+                price: 7200,
+                priceUSD: 55,
+                category: "official",
+                image: "https://images.unsplash.com/photo-1560769629-975ec94e6a86?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+                images: [
+                    "https://images.unsplash.com/photo-1560769629-975ec94e6a86?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+                    "https://images.unsplash.com/photo-1560769629-975ec94e6a86?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+                    "https://images.unsplash.com/photo-1560769629-975ec94e6a86?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80"
+                ],
+                description: "Business Derby shoes combine classic design with modern comfort. These shoes feature a sleek silhouette and premium materials that make a statement in any professional environment. The versatile design transitions seamlessly from the office to after-work engagements.",
+                specifications: {
+                    "Material": "Calfskin Leather",
+                    "Sole Type": "Leather & Rubber",
+                    "Closure": "Lace-up",
+                    "Heel Type": "Low",
+                    "Toe Style": "Plain Toe",
+                    "Color": "Brown"
+                },
+                sizes: ["7", "8", "9", "10", "11"]
+            },
+            {
+                id: 13,
+                name: "Corporate Loafer",
+                price: 6500,
+                priceUSD: 50,
+                category: "official",
+                image: "https://images.unsplash.com/photo-1562183241-b937e955a905?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+                images: [
+                    "https://images.unsplash.com/photo-1562183241-b937e955a905?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+                    "https://images.unsplash.com/photo-1562183241-b937e955a905?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+                    "https://images.unsplash.com/photo-1562183241-b937e955a905?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80"
+                ],
+                description: "Corporate Loafers offer the perfect blend of comfort and professionalism. These slip-on shoes feature premium materials and a sophisticated design that's ideal for busy professionals. The easy-to-wear style doesn't compromise on elegance or quality.",
+                specifications: {
+                    "Material": "Suede Leather",
+                    "Sole Type": "Leather",
+                    "Closure": "Slip-on",
+                    "Heel Type": "Low",
+                    "Toe Style": "Moc Toe",
+                    "Color": "Dark Brown"
+                },
+                sizes: ["7", "8", "9", "10", "11"]
+            },
+            {
+                id: 14,
+                name: "Professional Monk",
+                price: 7500,
+                priceUSD: 58,
+                category: "official",
+                image: "https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+                images: [
+                    "https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+                    "https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+                    "https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80"
+                ],
+                description: "The Professional Monk strap shoe is a distinctive choice for the modern professional. Featuring a classic design with a contemporary twist, these shoes showcase exceptional craftsmanship and attention to detail. Perfect for making a sophisticated statement.",
+                specifications: {
+                    "Material": "Full Grain Leather",
+                    "Sole Type": "Leather",
+                    "Closure": "Monk Strap",
+                    "Heel Type": "Low",
+                    "Toe Style": "Plain Toe",
+                    "Color": "Black"
+                },
+                sizes: ["8", "9", "10", "11", "12"]
+            },
+            {
+                id: 15,
+                name: "Formal Brogue",
+                price: 8200,
+                priceUSD: 63,
+                category: "official",
+                image: "https://images.unsplash.com/photo-1606107557195-0e29a4b5b4aa?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+                images: [
+                    "https://images.unsplash.com/photo-1606107557195-0e29a4b5b4aa?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+                    "https://images.unsplash.com/photo-1606107557195-0e29a4b5b4aa?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+                    "https://images.unsplash.com/photo-1606107557195-0e29a4b5b4aa?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80"
+                ],
+                description: "Formal Brogue shoes represent the pinnacle of traditional craftsmanship. These shoes feature intricate perforations and detailing that showcase the art of shoemaking. Perfect for formal occasions and professional settings where attention to detail matters.",
+                specifications: {
+                    "Material": "Full Grain Leather",
+                    "Sole Type": "Leather",
+                    "Closure": "Lace-up",
+                    "Heel Type": "Low",
+                    "Toe Style": "Wingtip",
+                    "Color": "Tan/Brown"
+                },
+                sizes: ["7", "8", "9", "10", "11"]
             }
         ];
 
@@ -995,14 +1508,66 @@
                         name: "Global Runner Pro",
                         price: 6500,
                         priceUSD: 50,
-                        image: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80"
+                        category: "men",
+                        image: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+                        images: [
+                            "https://images.unsplash.com/photo-1542291026-7eec264c27ff?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+                            "https://images.unsplash.com/photo-1542291026-7eec264c27ff?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80"
+                        ],
+                        description: "The Global Runner Pro is engineered for performance and style. These shoes feature advanced cushioning technology and a breathable upper that keeps your feet comfortable during long runs or busy days.",
+                        specifications: {
+                            "Material": "Mesh & Synthetic",
+                            "Sole Type": "Rubber",
+                            "Closure": "Lace-up",
+                            "Heel Type": "Low",
+                            "Toe Style": "Round",
+                            "Color": "Black/Red"
+                        },
+                        sizes: ["8", "9", "10", "11", "12"]
                     },
                     {
                         id: 102,
                         name: "International Walker",
                         price: 5800,
                         priceUSD: 45,
-                        image: "https://images.unsplash.com/photo-1560769629-975ec94e6a86?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80"
+                        category: "men",
+                        image: "https://images.unsplash.com/photo-1560769629-975ec94e6a86?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+                        images: [
+                            "https://images.unsplash.com/photo-1560769629-975ec94e6a86?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+                            "https://images.unsplash.com/photo-1560769629-975ec94e6a86?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80"
+                        ],
+                        description: "International Walker shoes are designed for global travelers. These versatile shoes feature a comfortable fit and durable construction that can handle any terrain. Perfect for business trips or vacations.",
+                        specifications: {
+                            "Material": "Leather & Synthetic",
+                            "Sole Type": "Rubber",
+                            "Closure": "Lace-up",
+                            "Heel Type": "Low",
+                            "Toe Style": "Round",
+                            "Color": "Brown/Tan"
+                        },
+                        sizes: ["7", "8", "9", "10", "11"]
+                    },
+                    {
+                        id: 103,
+                        name: "Elegant Heel",
+                        price: 6200,
+                        priceUSD: 48,
+                        category: "women",
+                        image: "https://images.unsplash.com/photo-1607522370275-f142068729ff?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+                        images: [
+                            "https://images.unsplash.com/photo-1607522370275-f142068729ff?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+                            "https://images.unsplash.com/photo-1607522370275-f142068729ff?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80"
+                        ],
+                        description: "Elegant Heel shoes are designed for special occasions. These sophisticated shoes feature a sleek design and premium materials that add a touch of glamour to any outfit. Perfect for weddings, parties, and formal events.",
+                        specifications: {
+                            "Material": "Satin",
+                            "Sole Type": "Leather",
+                            "Closure": "Ankle Strap",
+                            "Heel Type": "High (4 inches)",
+                            "Toe Style": "Pointed",
+                            "Color": "Silver"
+                        },
+                        sizes: ["5", "6", "7", "8", "9"]
                     }
                 ]
             },
@@ -1015,14 +1580,44 @@
                         name: "Premium Heritage",
                         price: 7200,
                         priceUSD: 55,
-                        image: "https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80"
+                        category: "official",
+                        image: "https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+                        images: [
+                            "https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+                            "https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80"
+                        ],
+                        description: "Premium Heritage shoes represent the finest in shoemaking tradition. These handcrafted shoes feature premium materials and meticulous attention to detail that's unmatched in the industry. Perfect for those who appreciate true luxury.",
+                        specifications: {
+                            "Material": "Exotic Leather",
+                            "Sole Type": "Leather",
+                            "Closure": "Lace-up",
+                            "Heel Type": "Low",
+                            "Toe Style": "Plain Toe",
+                            "Color": "Black"
+                        },
+                        sizes: ["8", "9", "10", "11", "12"]
                     },
                     {
                         id: 202,
                         name: "Luxury Urban",
                         price: 8500,
                         priceUSD: 65,
-                        image: "https://images.unsplash.com/photo-1606107557195-0e29a4b5b4aa?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80"
+                        category: "women",
+                        image: "https://images.unsplash.com/photo-1606107557195-0e29a4b5b4aa?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+                        images: [
+                            "https://images.unsplash.com/photo-1606107557195-0e29a4b5b4aa?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+                            "https://images.unsplash.com/photo-1606107557195-0e29a4b5b4aa?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80"
+                        ],
+                        description: "Luxury Urban sneakers combine high-fashion design with everyday comfort. These limited-edition shoes feature unique materials and exclusive design elements that make them a must-have for fashion enthusiasts.",
+                        specifications: {
+                            "Material": "Premium Leather & Mesh",
+                            "Sole Type": "Rubber",
+                            "Closure": "Lace-up",
+                            "Heel Type": "Low",
+                            "Toe Style": "Round",
+                            "Color": "White/Gold"
+                        },
+                        sizes: ["6", "7", "8", "9", "10"]
                     }
                 ]
             }
@@ -1032,6 +1627,9 @@
         let cart = [];
         let allProducts = [...products];
         let currentSection = 'home';
+        let activeCategory = 'all';
+        let selectedSize = null;
+        let currentProduct = null;
 
         // DOM elements
         const productGrid = document.getElementById('product-grid');
@@ -1048,6 +1646,10 @@
         const notification = document.getElementById('notification');
         const navLinks = document.querySelectorAll('.nav-link');
         const sectionTitle = document.querySelector('.section-title');
+        const categoryFilter = document.getElementById('category-filter');
+        const categoryBtns = document.querySelectorAll('.category-btn');
+        const productDetail = document.getElementById('product-detail');
+        const productDetailContent = document.getElementById('product-detail-content');
 
         // Initialize the app
         function init() {
@@ -1074,6 +1676,18 @@
                 });
             });
             
+            // Category filter
+            categoryBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const category = btn.getAttribute('data-category');
+                    filterByCategory(category);
+                    
+                    // Update active category button
+                    categoryBtns.forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                });
+            });
+            
             // Payment method selection
             const paymentMethods = document.querySelectorAll('.payment-method');
             paymentMethods.forEach(method => {
@@ -1092,7 +1706,7 @@
                 productGrid.innerHTML = `
                     <div style="grid-column: span 3; text-align: center; padding: 40px;">
                         <h3>No products found</h3>
-                        <p>Try a different search term</p>
+                        <p>Try a different search term or category</p>
                     </div>
                 `;
                 return;
@@ -1111,18 +1725,162 @@
                             <span class="price">KES ${product.price.toLocaleString()}</span>
                             <span class="price-usd">($${product.priceUSD})</span>
                         </div>
-                        <button class="add-to-cart" data-id="${product.id}">Add to Cart</button>
+                        <button class="view-details" data-id="${product.id}">View Details</button>
                     </div>
                 `;
                 
                 productGrid.appendChild(productCard);
                 
-                // Add to cart button event
-                const addToCartBtn = productCard.querySelector('.add-to-cart');
-                addToCartBtn.addEventListener('click', () => {
-                    addToCart(product.id);
+                // View details button event
+                const viewDetailsBtn = productCard.querySelector('.view-details');
+                viewDetailsBtn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    showProductDetail(product.id);
+                });
+                
+                // Make entire card clickable
+                productCard.addEventListener('click', () => {
+                    showProductDetail(product.id);
                 });
             });
+        }
+
+        // Show product detail
+        function showProductDetail(productId) {
+            const product = allProducts.find(p => p.id === productId);
+            if (!product) return;
+            
+            currentProduct = product;
+            selectedSize = null;
+            
+            // Hide all sections
+            hideAllSections();
+            
+            // Show product detail section
+            productDetail.style.display = 'block';
+            
+            // Populate product detail content
+            productDetailContent.innerHTML = `
+                <div class="product-detail-images">
+                    <div class="main-image">
+                        <img src="${product.images[0]}" alt="${product.name}" id="main-product-image">
+                    </div>
+                    <div class="thumbnail-images">
+                        ${product.images.map((img, index) => `
+                            <div class="thumbnail ${index === 0 ? 'active' : ''}" data-index="${index}">
+                                <img src="${img}" alt="${product.name}">
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+                <div class="product-detail-info">
+                    <h1>${product.name}</h1>
+                    <div class="product-detail-price">KES ${product.price.toLocaleString()} ($${product.priceUSD})</div>
+                    <div class="product-detail-description">
+                        ${product.description}
+                    </div>
+                    <div class="product-specs">
+                        <h3>Specifications</h3>
+                        <ul class="specs-list">
+                            ${Object.entries(product.specifications).map(([key, value]) => `
+                                <li><strong>${key}:</strong> ${value}</li>
+                            `).join('')}
+                        </ul>
+                    </div>
+                    <div class="size-selector">
+                        <h3>Select Size</h3>
+                        <div class="size-options">
+                            ${product.sizes.map(size => `
+                                <div class="size-option" data-size="${size}">${size}</div>
+                            `).join('')}
+                        </div>
+                    </div>
+                    <div class="product-detail-actions">
+                        <button class="add-to-cart-detail" id="add-to-cart-detail">Add to Cart</button>
+                        <button class="back-btn" id="back-to-products">Back to Products</button>
+                    </div>
+                </div>
+            `;
+            
+            // Add event listeners for thumbnails
+            const thumbnails = productDetailContent.querySelectorAll('.thumbnail');
+            const mainImage = document.getElementById('main-product-image');
+            
+            thumbnails.forEach(thumbnail => {
+                thumbnail.addEventListener('click', () => {
+                    const index = thumbnail.getAttribute('data-index');
+                    mainImage.src = product.images[index];
+                    
+                    // Update active thumbnail
+                    thumbnails.forEach(t => t.classList.remove('active'));
+                    thumbnail.classList.add('active');
+                });
+            });
+            
+            // Add event listeners for size options
+            const sizeOptions = productDetailContent.querySelectorAll('.size-option');
+            sizeOptions.forEach(option => {
+                option.addEventListener('click', () => {
+                    const size = option.getAttribute('data-size');
+                    selectedSize = size;
+                    
+                    // Update selected size
+                    sizeOptions.forEach(o => o.classList.remove('selected'));
+                    option.classList.add('selected');
+                });
+            });
+            
+            // Add event listener for add to cart button
+            const addToCartBtn = document.getElementById('add-to-cart-detail');
+            addToCartBtn.addEventListener('click', () => {
+                if (!selectedSize) {
+                    showNotification('Please select a size');
+                    return;
+                }
+                
+                addToCartWithSize(product.id, selectedSize);
+            });
+            
+            // Add event listener for back button
+            const backBtn = document.getElementById('back-to-products');
+            backBtn.addEventListener('click', () => {
+                showSection(currentSection);
+            });
+        }
+
+        // Add to cart with size
+        function addToCartWithSize(productId, size) {
+            const product = allProducts.find(p => p.id === productId);
+            if (!product) return;
+            
+            const existingItem = cart.find(item => 
+                item.id === productId && item.selectedSize === size
+            );
+            
+            if (existingItem) {
+                existingItem.quantity++;
+            } else {
+                cart.push({
+                    ...product,
+                    selectedSize: size,
+                    quantity: 1
+                });
+            }
+            
+            updateCartCount();
+            showNotification(`Added ${product.name} (Size ${size}) to cart!`);
+        }
+
+        // Filter by category
+        function filterByCategory(category) {
+            activeCategory = category;
+            
+            if (category === 'all') {
+                renderProducts(allProducts);
+            } else {
+                const filteredProducts = allProducts.filter(product => product.category === category);
+                renderProducts(filteredProducts);
+            }
         }
 
         // Add to cart
@@ -1183,14 +1941,14 @@
                     <img src="${item.image}" alt="${item.name}">
                     <div class="cart-item-info">
                         <div class="cart-item-name">${item.name}</div>
-                        <div class="cart-item-price">$${item.priceUSD}</div>
+                        <div class="cart-item-price">$${item.priceUSD} ${item.selectedSize ? `(Size ${item.selectedSize})` : ''}</div>
                     </div>
                     <div class="cart-item-quantity">
-                        <button class="decrease-quantity" data-id="${item.id}">-</button>
+                        <button class="decrease-quantity" data-id="${item.id}" data-size="${item.selectedSize || ''}">-</button>
                         <input type="text" value="${item.quantity}" readonly>
-                        <button class="increase-quantity" data-id="${item.id}">+</button>
+                        <button class="increase-quantity" data-id="${item.id}" data-size="${item.selectedSize || ''}">+</button>
                     </div>
-                    <div class="cart-item-remove" data-id="${item.id}">
+                    <div class="cart-item-remove" data-id="${item.id}" data-size="${item.selectedSize || ''}">
                         <i class="fas fa-trash-alt"></i>
                     </div>
                 `;
@@ -1205,15 +1963,15 @@
                 const removeBtn = cartItem.querySelector('.cart-item-remove');
                 
                 decreaseBtn.addEventListener('click', () => {
-                    updateQuantity(item.id, item.quantity - 1);
+                    updateQuantity(item.id, item.quantity - 1, item.selectedSize);
                 });
                 
                 increaseBtn.addEventListener('click', () => {
-                    updateQuantity(item.id, item.quantity + 1);
+                    updateQuantity(item.id, item.quantity + 1, item.selectedSize);
                 });
                 
                 removeBtn.addEventListener('click', () => {
-                    removeFromCart(item.id);
+                    removeFromCart(item.id, item.selectedSize);
                 });
             });
             
@@ -1221,13 +1979,16 @@
         }
 
         // Update quantity
-        function updateQuantity(productId, newQuantity) {
+        function updateQuantity(productId, newQuantity, size) {
             if (newQuantity <= 0) {
-                removeFromCart(productId);
+                removeFromCart(productId, size);
                 return;
             }
             
-            const item = cart.find(item => item.id === productId);
+            const item = cart.find(item => 
+                item.id === productId && (item.selectedSize === size || (!item.selectedSize && !size))
+            );
+            
             if (item) {
                 item.quantity = newQuantity;
                 updateCartCount();
@@ -1236,8 +1997,10 @@
         }
 
         // Remove from cart
-        function removeFromCart(productId) {
-            cart = cart.filter(item => item.id !== productId);
+        function removeFromCart(productId, size) {
+            cart = cart.filter(item => 
+                !(item.id === productId && (item.selectedSize === size || (!item.selectedSize && !size)))
+            );
             updateCartCount();
             renderCart();
         }
@@ -1363,8 +2126,12 @@
                 // Update section title based on current section
                 if (section === 'home') {
                     sectionTitle.textContent = 'Featured Shoes';
+                    // Show category filter on home page
+                    categoryFilter.style.display = 'flex';
                 } else if (section === 'shop') {
                     sectionTitle.textContent = 'All Shoes';
+                    // Hide category filter on shop page
+                    categoryFilter.style.display = 'none';
                 }
                 
                 // Reset search when navigating to home or shop
@@ -1375,9 +2142,10 @@
             } else if (section === 'checkout') {
                 showCheckout();
             } else {
-                // For about and contact, we'll show a placeholder
+                // For about and contact, we'll show a placeholder with shoes
                 const homeSection = document.getElementById('home');
                 homeSection.style.display = 'block';
+                categoryFilter.style.display = 'none';
                 
                 // Update section title
                 if (section === 'about') {
@@ -1395,8 +2163,42 @@
                                 craftsmanship with modern aesthetics. When you wear RBM shoes, you're not just wearing footwear - 
                                 you're stepping into a rich cultural experience.
                             </p>
+                            <h3 style="margin-top: 40px;">Our Featured Collection</h3>
                         </div>
                     `;
+                    // Add some featured products
+                    const featuredProducts = allProducts.slice(0, 6);
+                    featuredProducts.forEach(product => {
+                        const productCard = document.createElement('div');
+                        productCard.className = 'product-card';
+                        productCard.innerHTML = `
+                            <div class="product-img">
+                                <img src="${product.image}" alt="${product.name}">
+                            </div>
+                            <div class="product-info">
+                                <h3 class="product-name">${product.name}</h3>
+                                <div class="product-price">
+                                    <span class="price">KES ${product.price.toLocaleString()}</span>
+                                    <span class="price-usd">($${product.priceUSD})</span>
+                                </div>
+                                <button class="view-details" data-id="${product.id}">View Details</button>
+                            </div>
+                        `;
+                        
+                        productGrid.appendChild(productCard);
+                        
+                        // View details button event
+                        const viewDetailsBtn = productCard.querySelector('.view-details');
+                        viewDetailsBtn.addEventListener('click', (e) => {
+                            e.stopPropagation();
+                            showProductDetail(product.id);
+                        });
+                        
+                        // Make entire card clickable
+                        productCard.addEventListener('click', () => {
+                            showProductDetail(product.id);
+                        });
+                    });
                 } else if (section === 'contact') {
                     sectionTitle.textContent = 'Contact Us';
                     productGrid.innerHTML = `
@@ -1424,8 +2226,42 @@
                                     <p>Sunday: Closed</p>
                                 </div>
                             </div>
+                            <h3 style="margin-top: 40px;">Popular Picks</h3>
                         </div>
                     `;
+                    // Add some popular products
+                    const popularProducts = allProducts.slice(6, 12);
+                    popularProducts.forEach(product => {
+                        const productCard = document.createElement('div');
+                        productCard.className = 'product-card';
+                        productCard.innerHTML = `
+                            <div class="product-img">
+                                <img src="${product.image}" alt="${product.name}">
+                            </div>
+                            <div class="product-info">
+                                <h3 class="product-name">${product.name}</h3>
+                                <div class="product-price">
+                                    <span class="price">KES ${product.price.toLocaleString()}</span>
+                                    <span class="price-usd">($${product.priceUSD})</span>
+                                </div>
+                                <button class="view-details" data-id="${product.id}">View Details</button>
+                            </div>
+                        `;
+                        
+                        productGrid.appendChild(productCard);
+                        
+                        // View details button event
+                        const viewDetailsBtn = productCard.querySelector('.view-details');
+                        viewDetailsBtn.addEventListener('click', (e) => {
+                            e.stopPropagation();
+                            showProductDetail(product.id);
+                        });
+                        
+                        // Make entire card clickable
+                        productCard.addEventListener('click', () => {
+                            showProductDetail(product.id);
+                        });
+                    });
                 }
             }
         }
@@ -1435,6 +2271,7 @@
             document.getElementById('home').style.display = 'none';
             cartSection.style.display = 'none';
             checkoutSection.style.display = 'none';
+            productDetail.style.display = 'none';
         }
 
         // Initialize the app when DOM is loaded
