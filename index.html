@@ -593,6 +593,27 @@
             opacity: 1;
         }
         
+        /* Loading spinner */
+        .loading {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 200px;
+        }
+        
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 5px solid rgba(200, 16, 46, 0.2);
+            border-radius: 50%;
+            border-top-color: var(--primary);
+            animation: spin 1s ease-in-out infinite;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
         /* Responsive */
         @media (max-width: 992px) {
             .checkout-form {
@@ -963,8 +984,54 @@
             }
         ];
 
+        // External product sources (simulated)
+        const externalSources = [
+            {
+                name: "Global Shoe Market",
+                url: "https://api.example.com/shoes",
+                products: [
+                    {
+                        id: 101,
+                        name: "Global Runner Pro",
+                        price: 6500,
+                        priceUSD: 50,
+                        image: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80"
+                    },
+                    {
+                        id: 102,
+                        name: "International Walker",
+                        price: 5800,
+                        priceUSD: 45,
+                        image: "https://images.unsplash.com/photo-1560769629-975ec94e6a86?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80"
+                    }
+                ]
+            },
+            {
+                name: "Premium Footwear Collection",
+                url: "https://api.example.com/premium-shoes",
+                products: [
+                    {
+                        id: 201,
+                        name: "Premium Heritage",
+                        price: 7200,
+                        priceUSD: 55,
+                        image: "https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80"
+                    },
+                    {
+                        id: 202,
+                        name: "Luxury Urban",
+                        price: 8500,
+                        priceUSD: 65,
+                        image: "https://images.unsplash.com/photo-1606107557195-0e29a4b5b4aa?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80"
+                    }
+                ]
+            }
+        ];
+
         // Cart functionality
         let cart = [];
+        let allProducts = [...products];
+        let currentSection = 'home';
 
         // DOM elements
         const productGrid = document.getElementById('product-grid');
@@ -980,6 +1047,7 @@
         const searchBtn = document.getElementById('search-btn');
         const notification = document.getElementById('notification');
         const navLinks = document.querySelectorAll('.nav-link');
+        const sectionTitle = document.querySelector('.section-title');
 
         // Initialize the app
         function init() {
@@ -991,7 +1059,7 @@
             checkoutBtn.addEventListener('click', showCheckout);
             checkoutForm.addEventListener('submit', placeOrder);
             searchBar.addEventListener('input', searchProducts);
-            searchBtn.addEventListener('click', searchProducts);
+            searchBtn.addEventListener('click', performSearch);
             
             // Navigation
             navLinks.forEach(link => {
@@ -1017,8 +1085,18 @@
         }
 
         // Render products
-        function renderProducts(productsToRender = products) {
+        function renderProducts(productsToRender = allProducts) {
             productGrid.innerHTML = '';
+            
+            if (productsToRender.length === 0) {
+                productGrid.innerHTML = `
+                    <div style="grid-column: span 3; text-align: center; padding: 40px;">
+                        <h3>No products found</h3>
+                        <p>Try a different search term</p>
+                    </div>
+                `;
+                return;
+            }
             
             productsToRender.forEach(product => {
                 const productCard = document.createElement('div');
@@ -1049,7 +1127,9 @@
 
         // Add to cart
         function addToCart(productId) {
-            const product = products.find(p => p.id === productId);
+            const product = allProducts.find(p => p.id === productId);
+            if (!product) return;
+            
             const existingItem = cart.find(item => item.id === productId);
             
             if (existingItem) {
@@ -1195,24 +1275,71 @@
             }, 2000);
         }
 
-        // Search products
-        function searchProducts() {
-            const searchTerm = searchBar.value.toLowerCase();
+        // Perform search
+        function performSearch() {
+            const searchTerm = searchBar.value.toLowerCase().trim();
             
             if (!searchTerm) {
-                renderProducts();
+                renderProducts(allProducts);
                 return;
             }
             
-            const filteredProducts = products.filter(product => {
-                const nameMatch = product.name.toLowerCase().includes(searchTerm);
-                const priceMatch = product.price.toString().includes(searchTerm) || 
-                                  product.priceUSD.toString().includes(searchTerm);
-                
-                return nameMatch || priceMatch;
-            });
+            // Show loading state
+            productGrid.innerHTML = '<div class="loading"><div class="spinner"></div></div>';
             
-            renderProducts(filteredProducts);
+            // Simulate API call delay
+            setTimeout(() => {
+                // First search in local products
+                let filteredProducts = allProducts.filter(product => {
+                    const nameMatch = product.name.toLowerCase().includes(searchTerm);
+                    const priceMatch = product.price.toString().includes(searchTerm) || 
+                                      product.priceUSD.toString().includes(searchTerm);
+                    
+                    return nameMatch || priceMatch;
+                });
+                
+                // If no local results, search in external sources
+                if (filteredProducts.length === 0) {
+                    showNotification('Searching external sources...');
+                    
+                    // Simulate fetching from external sources
+                    setTimeout(() => {
+                        let externalResults = [];
+                        
+                        externalSources.forEach(source => {
+                            const results = source.products.filter(product => {
+                                const nameMatch = product.name.toLowerCase().includes(searchTerm);
+                                const priceMatch = product.price.toString().includes(searchTerm) || 
+                                                  product.priceUSD.toString().includes(searchTerm);
+                                
+                                return nameMatch || priceMatch;
+                            });
+                            
+                            externalResults = [...externalResults, ...results];
+                        });
+                        
+                        if (externalResults.length > 0) {
+                            // Add external products to all products
+                            allProducts = [...allProducts, ...externalResults];
+                            filteredProducts = externalResults;
+                            showNotification(`Found ${externalResults.length} products from external sources`);
+                        } else {
+                            showNotification('No products found in any source');
+                        }
+                        
+                        renderProducts(filteredProducts);
+                    }, 1000);
+                } else {
+                    renderProducts(filteredProducts);
+                }
+            }, 500);
+        }
+
+        // Search products (for input event)
+        function searchProducts() {
+            // Debounce the search
+            clearTimeout(window.searchTimeout);
+            window.searchTimeout = setTimeout(performSearch, 300);
         }
 
         // Show notification
@@ -1227,10 +1354,22 @@
 
         // Show section
         function showSection(section) {
+            currentSection = section;
             hideAllSections();
             
             if (section === 'home' || section === 'shop') {
                 document.getElementById('home').style.display = 'block';
+                
+                // Update section title based on current section
+                if (section === 'home') {
+                    sectionTitle.textContent = 'Featured Shoes';
+                } else if (section === 'shop') {
+                    sectionTitle.textContent = 'All Shoes';
+                }
+                
+                // Reset search when navigating to home or shop
+                searchBar.value = '';
+                renderProducts(allProducts);
             } else if (section === 'cart') {
                 showCart();
             } else if (section === 'checkout') {
@@ -1241,7 +1380,6 @@
                 homeSection.style.display = 'block';
                 
                 // Update section title
-                const sectionTitle = homeSection.querySelector('.section-title');
                 if (section === 'about') {
                     sectionTitle.textContent = 'About RBM';
                     productGrid.innerHTML = `
